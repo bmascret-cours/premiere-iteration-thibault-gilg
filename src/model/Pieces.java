@@ -2,31 +2,16 @@ package model;
 
 public interface Pieces {
 	
-	public int getX() {	
-		return Coord.x;
-	}
+	public int getX();
 	
-	public int getY() {	
-		return Coord.y;
-	}
+	public int getY();
 	
-	public Couleur getCouleur() {
-		return Couleur
-	}
+	public Couleur getCouleur();
 	
-	public boolean capture() {
-		if () {
-			return true;
-			
-		}
-	}
+	public boolean capture();
 	
-	public boolean isMoveOk(int xFinal, int yFinal) {
-		
-	}
+	public boolean isMoveOk(int xFinal, int yFinal);
 	
-	public boolean	move(int xFinal, int yFinal) {
-		
-	}
+	public boolean	move(int xFinal, int yFinal);
 }
 
