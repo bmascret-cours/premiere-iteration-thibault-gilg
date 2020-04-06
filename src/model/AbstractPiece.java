@@ -52,6 +52,7 @@ public abstract class AbstractPiece implements Pieces {
 		}
 		return false;
 	}
+	
 	public String toString() {
 		return getClass().getSimpleName() + " (" + getX() + "," + getY() + ")";
 	}

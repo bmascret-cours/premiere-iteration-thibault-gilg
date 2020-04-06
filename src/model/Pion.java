@@ -8,11 +8,19 @@ public class Pion extends AbstractPiece {
 	}
 
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		// TODO déplacement de 2 cases au début et déplacement en diagonal
+		// TODO déplacement de 2 cases au début
 		if (xFinal == this.getX() && yFinal == this.getY() + 1) {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	public boolean move(int x, int y) {
+		return false;
+	}
+	
+	public boolean isMoveDiagOk(int xFinal, int yFinal) {
 		return false;
 	}
 }
