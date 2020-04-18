@@ -4,6 +4,7 @@ public abstract class AbstractPiece implements Pieces {
 	
 	protected Coord coord;
 	private Couleur couleur;
+	private String name;
 	
 	public AbstractPiece(Couleur couleur, Coord coord) {
 		this.couleur = couleur;
@@ -54,12 +55,12 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public String toString() {
-		return getClass().getSimpleName() + " (" + getX() + "," + getY() + ")";
+		return this.name + " (" + getX() + "," + getY() + ")";
 	}
 	
 	
 	public static void main(String[] args) {		
-		Pieces Tour = new Pion(Couleur.NOIR, new Coord(0, 0));
+		Pieces Tour = new Tour(Couleur.NOIR, new Coord(0, 0));
 		System.out.println(Tour);
 		System.out.println(Tour.isMoveOk(0,1));
 

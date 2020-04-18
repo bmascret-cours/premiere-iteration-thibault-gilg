@@ -6,6 +6,10 @@ public interface Pieces {
 	
 	public int getY();
 	
+	void setX(int x);
+	
+	void setY(int y);
+	
 	public Couleur getCouleur();
 	
 	public boolean capture();
