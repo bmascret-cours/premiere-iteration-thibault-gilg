@@ -9,6 +9,7 @@ public abstract class AbstractPiece implements Pieces {
 	public AbstractPiece(Couleur couleur, Coord coord) {
 		this.couleur = couleur;
 		this.coord = coord;
+		this.name = this.getClass().getSimpleName();
 	}
 	
 	public void setX(int x) {
