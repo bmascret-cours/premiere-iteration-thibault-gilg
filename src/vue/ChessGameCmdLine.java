@@ -46,7 +46,7 @@ public class ChessGameCmdLine implements Observer{
 		for(PieceIHM pieceIHM : piecesIHM) {
 
 			Couleur color = pieceIHM.getCouleur();
-			String stColor = (Couleur.BLANC == color ? "B_" : "N_" );
+			String stColor = (Couleur.BLANC == color ? "B_" : "N_" ); // ? = if et : = else
 			String type = (pieceIHM.getTypePiece()).substring(0, 2);
 			
 			for(Coord coord : pieceIHM.getList()) {
@@ -90,7 +90,7 @@ public class ChessGameCmdLine implements Observer{
 		chessGameControler.move(new Coord(3, 4), new Coord(3, 4));	// false
 
 		System.out.print("\n Déplacement de 3,4 vers 4,3 = ");
-		chessGameControler.move(new Coord(3, 4), new Coord(4, 3));	// true		
+		chessGameControler.move(new Coord(3, 4), new Coord(4, 3));	// true	
 
 	}
 

@@ -16,20 +16,19 @@ public class Jeu {
 	}
 	
 	private Pieces findPiece(int x, int y) {
-		for (int i = 0; i < this.pieces.size(); i++) {
-			if (isPieceHere(x,y)) {
-				return pieces.get(i);
-			}
-		}
-		return null;
+		Pieces foundPiece = null;
+		 for (Pieces piece : this.pieces) {
+	            if (piece.getX() == x && piece.getY() == y) {
+	                foundPiece = piece;
+	            }
+	        }
+		 return foundPiece;
 	}
 	
 	public boolean isPieceHere(int x, int y) {
-		for (int i = 0; i < this.pieces.size(); i++) {
-			if (pieces.get(i).getX() == x && pieces.get(i).getY() == y) {
+		if(this.findPiece(x,y) != null) {
 				return true;
 			}
-		}
 		return false;
 	}
 	
@@ -61,7 +60,10 @@ public class Jeu {
 	
 	public Couleur getPieceColor(int x, int y) {
 		Pieces piece = this.findPiece(x, y);
-		return piece.getCouleur();
+		if (piece != null) {
+			return piece.getCouleur();
+		}
+		return Couleur.NOIRBLANC;
 	}
 	
 	public String getPieceType(int x, int y) {

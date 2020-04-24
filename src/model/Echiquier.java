@@ -15,8 +15,9 @@ public class Echiquier implements BoardGames {
 	public Echiquier() {
 		this.JeuBlanc = new Jeu(Couleur.BLANC);
 		this.JeuNoir = new Jeu(Couleur.NOIR);
-		this.JeuCourant = JeuNoir;
-		this.JeuNonCourant = JeuBlanc;
+		this.JeuCourant = JeuBlanc;
+		this.JeuNonCourant = JeuNoir;
+		this.message = "";
 
 	}
 
@@ -50,21 +51,32 @@ public class Echiquier implements BoardGames {
 	}
 	
 	public boolean isMoveOk(int	xInit, int yInit, int xFinal, int yFinal) {
-		// pas de pièce aux coords init
-		if (!this.JeuCourant.isPieceHere(xInit, yInit)){
-			return false;
+		// si pièce aux coordonnées initiales
+		if (this.JeuCourant.isPieceHere(xInit, yInit)) {
+			// si coordonnées finales différentes des initiales
+			if (!(xFinal == xInit && yFinal == yInit)) {
+				// si coordonnées finales valides
+				if (Coord.coordonnees_valides(xFinal, yFinal)) {
+					// si algo de déplacement respecté
+					if (this.JeuCourant.isMoveOk(xInit, yInit, xFinal, yFinal)) {
+						return true;
+						
+					}
+				}
+			}
 		}
-		/*
-		if ((xFinal != xInit && yFinal != yInit) || (xFinal >= 0 && xFinal <= 8 && yFinal >= 0 && yFinal <= 8) 		
-			|| JeuCourant.isMoveOk(xInit, yInit, xFinal, yFinal) == false
-			|| (JeuNonCourant.findPiece ))	// mouvement possible
-			return false;
-		}*/
+		
+		return false;
 	}
 	
 	@Override
 	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-		return this.JeuCourant.move(xInit, yInit, xFinal, yFinal);
+		if (this.isMoveOk(xInit, yInit, xFinal, yFinal)) {
+			this.setMessage("Déplacement OK");
+			return this.JeuCourant.move(xInit, yInit, xFinal, yFinal);
+		}
+		this.setMessage("Déplacement interdit");
+		return false;
 	}
 	
 	@Override
@@ -101,8 +113,10 @@ public class Echiquier implements BoardGames {
 	public static void main(String[] args) {		
 		Echiquier Echec = new Echiquier();
 		System.out.println(Echec);
-		
-		System.out.println(Echec.getPieceIHM());
+		System.out.println(Echec.getPieceColor(0, 0));
+		System.out.println(Echec.move(0, 0, 3, 7));
 
 	}
+	
+	
 }

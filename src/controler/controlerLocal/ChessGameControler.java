@@ -26,7 +26,10 @@ public class ChessGameControler extends AbstractChessGameControler {
 	 */
 	@Override
 	public boolean isPlayerOK(Coord initCoord) {
-		// ToDo
+		if (this.getColorCurrentPlayer() == this.getPieceColor(initCoord)) {
+			return true;
+		}
+		return false;
 	}
 	
 	/* (non-Javadoc)
@@ -39,6 +42,7 @@ public class ChessGameControler extends AbstractChessGameControler {
 			String promotionType) {
 		
 	}
+	
 
 	
 }

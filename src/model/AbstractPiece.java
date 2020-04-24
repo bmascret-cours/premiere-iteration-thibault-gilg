@@ -43,7 +43,6 @@ public abstract class AbstractPiece implements Pieces {
 
 	@Override
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -61,9 +60,13 @@ public abstract class AbstractPiece implements Pieces {
 	
 	
 	public static void main(String[] args) {		
-		Pieces Tour = new Tour(Couleur.NOIR, new Coord(0, 0));
-		System.out.println(Tour);
-		System.out.println(Tour.isMoveOk(0,1));
+		Pieces Pion = new Pion(Couleur.BLANC, new Coord(3, 6));
+		System.out.println(Pion);
+		System.out.println(Pion.isMoveOk(3,4));
+		Pion.move(0,2);
+		System.out.println(Pion);
+		System.out.println(Pion.isMoveOk(0,1));
+
 
 	}
 	
