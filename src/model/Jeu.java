@@ -80,36 +80,36 @@ public class Jeu {
 		* ne donnant que des accès en lecture sur des PieceIHM
 		* (type piece + couleur + liste de coordonnées)
 		*/
-		public List<PieceIHM> getPiecesIHM(){
-			PieceIHM newPieceIHM = null;
-			List<PieceIHM> list = new LinkedList<PieceIHM>();
+	public List<PieceIHM> getPiecesIHM(){
+		PieceIHM newPieceIHM = null;
+		List<PieceIHM> list = new LinkedList<PieceIHM>();
+		
+		for (Pieces piece : pieces){
 			
-			for (Pieces piece : pieces){
-				
-				boolean existe = false;
-				// si le type de piece existe déjà dans la liste de PieceIHM
-				// ajout des coordonnées de la pièce dans la liste de Coord de ce type
-				// si elle est toujours en jeu (x et y != -1)
-				for ( PieceIHM pieceIHM : list){
-					if ((pieceIHM.getTypePiece()).equals(piece.getClass().getSimpleName())){
-						existe = true;
-						if (piece.getX() != -1){
-							pieceIHM.add(new Coord(piece.getX(), piece.getY()));
-							}
-					}
-				}
-				// sinon, création d'une nouvelle PieceIHM si la pièce est toujours en jeu
-				if (! existe) {
+			boolean existe = false;
+			// si le type de piece existe déjà dans la liste de PieceIHM
+			// ajout des coordonnées de la pièce dans la liste de Coord de ce type
+			// si elle est toujours en jeu (x et y != -1)
+			for ( PieceIHM pieceIHM : list){
+				if ((pieceIHM.getTypePiece()).equals(piece.getClass().getSimpleName())){
+					existe = true;
 					if (piece.getX() != -1){
-						newPieceIHM = new PieceIHM(piece.getClass().getSimpleName(),
-						piece.getCouleur());
-						newPieceIHM.add(new Coord(piece.getX(), piece.getY()));
-						list.add(newPieceIHM);
-					}
+						pieceIHM.add(new Coord(piece.getX(), piece.getY()));
+						}
 				}
 			}
-			return list;
+			// sinon, création d'une nouvelle PieceIHM si la pièce est toujours en jeu
+			if (! existe) {
+				if (piece.getX() != -1){
+					newPieceIHM = new PieceIHM(piece.getClass().getSimpleName(),
+					piece.getCouleur());
+					newPieceIHM.add(new Coord(piece.getX(), piece.getY()));
+					list.add(newPieceIHM);
+				}
+			}
 		}
+		return list;
+	}
 	
 	public void setCastling() {
 		

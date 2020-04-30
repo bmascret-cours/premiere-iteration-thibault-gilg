@@ -59,23 +59,22 @@ public class Echiquier implements BoardGames {
 				if (Coord.coordonnees_valides(xFinal, yFinal)) {
 					// si algo de déplacement respecté
 					if (this.JeuCourant.isMoveOk(xInit, yInit, xFinal, yFinal)) {
+						this.setMessage("Déplacement OK");
 						return true;
 						
 					}
 				}
 			}
 		}
-		
+		this.setMessage("Déplacement interdit");
 		return false;
 	}
 	
 	@Override
 	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 		if (this.isMoveOk(xInit, yInit, xFinal, yFinal)) {
-			this.setMessage("Déplacement OK");
 			return this.JeuCourant.move(xInit, yInit, xFinal, yFinal);
 		}
-		this.setMessage("Déplacement interdit");
 		return false;
 	}
 	

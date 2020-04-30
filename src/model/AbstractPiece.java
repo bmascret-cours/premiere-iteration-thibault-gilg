@@ -17,7 +17,7 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public void setY(int y) {
-		this.coord.x = y;
+		this.coord.y = y;
 	}
 	
 	@Override
@@ -60,12 +60,8 @@ public abstract class AbstractPiece implements Pieces {
 	
 	
 	public static void main(String[] args) {		
-		Pieces Pion = new Pion(Couleur.BLANC, new Coord(3, 6));
-		System.out.println(Pion);
-		System.out.println(Pion.isMoveOk(3,4));
-		Pion.move(0,2);
-		System.out.println(Pion);
-		System.out.println(Pion.isMoveOk(0,1));
+		Pieces Pion = new Pion(Couleur.NOIR, new Coord(0,1));
+		System.out.println(Pion.move(0, 0));
 
 
 	}

@@ -2,7 +2,7 @@ package model;
 
 public class Pion extends AbstractPiece implements Pions {
 	
-	private boolean firstMove =  false; 
+	private boolean hasMoved =  false; 
 	
 	public Pion(Couleur couleur, Coord coord) {
 		super(couleur, coord);
@@ -11,19 +11,19 @@ public class Pion extends AbstractPiece implements Pions {
 
 	public boolean isMoveOk(int xFinal, int yFinal) {
 		if (this.getCouleur().equals(Couleur.NOIR)) {
-			if (firstMove && xFinal == this.getX() && yFinal == this.getY() + 1) {
+			if (xFinal == this.getX() && yFinal == this.getY() + 1) {
 				return true;
 			}
-			else if (!firstMove && xFinal == this.getX() && yFinal == this.getY() + 2) {
+			else if (!hasMoved && xFinal == this.getX() && yFinal == this.getY() + 2) {
 				return true;
 			}
 
 		}
 		else {
-			if (firstMove && xFinal == this.getX() && yFinal == this.getY() - 1) {
+			if (xFinal == this.getX() && yFinal == this.getY() - 1) {
 				return true;
 			}
-			else if (!firstMove && xFinal == this.getX() && yFinal == this.getY() - 2) {
+			else if (!hasMoved && xFinal == this.getX() && yFinal == this.getY() - 2) {
 				return true;
 			}
 		}
@@ -32,7 +32,7 @@ public class Pion extends AbstractPiece implements Pions {
 	
 	public boolean move(int xFinal, int yFinal) {
 		if (this.isMoveOk(xFinal, yFinal)) {
-			this.firstMove = true;
+			this.hasMoved = true;
 			return true;
 		}
 		return false;

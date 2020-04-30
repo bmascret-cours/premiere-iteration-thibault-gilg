@@ -13,16 +13,16 @@ public  class PieceIHM {
 	 
 	String type;
 	Couleur couleur;
-	List<Coord> list;
+	List<Coord> listCoord;
 	
 	PieceIHM(String type, Couleur couleur) {
 		this.type = type;
 		this.couleur = couleur;
-		list = new LinkedList<Coord>();
+		listCoord = new LinkedList<Coord>();
 	}
 	
 	public void add(Coord coord){
-		list.add(coord);
+		listCoord.add(coord);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public  class PieceIHM {
 	 * @return the list
 	 */
 	public List<Coord> getList() {
-		return list;
+		return listCoord;
 	}
 
 	/* (non-Javadoc)
@@ -52,6 +52,6 @@ public  class PieceIHM {
 	@Override
 	public String toString() {
 		return "PieceIHM [type=" + type + ", couleur=" + couleur + ", list="
-				+ list + "]";
+				+ listCoord + "]";
 	}
 }
