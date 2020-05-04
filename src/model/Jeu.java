@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 import tools.ChessPiecesFactory;
+import tools.ChessSinglePieceFactory;
 
 public class Jeu {
 	
@@ -41,13 +42,11 @@ public class Jeu {
 	}
 	
 	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-		if (this.isMoveOk(xInit, yInit, xFinal, yFinal)) {
-			Pieces piece = this.findPiece(xInit, yInit);	
-			piece.setX(xFinal);
-			piece.setY(yFinal);
-			return true;
+		Pieces piece = this.findPiece(xInit, yInit);	
+		if (piece == null) {
+			return false;
 		}
-		return false;
+		return piece.move(xFinal, yFinal);
 	}
 	
 	public void setPossibleCapture() {
@@ -115,6 +114,7 @@ public class Jeu {
 		
 	}
 	
+	//TODO
 	public void undoMove() {
 		
 	}
@@ -124,18 +124,25 @@ public class Jeu {
 	}
 	
 	public boolean isPawnPromotion(int xFinal, int yFinal) {
-		if (this.getPieceType(xFinal, yFinal).getClass().getSimpleName() == "Pion"){
-			return true;
+		Pieces piece = findPiece(xFinal, yFinal);
+		if (this.getPieceType(xFinal, yFinal) == "Pion"){
+			if ((piece.getCouleur().equals(Couleur.BLANC) && piece.getY() == 0) 
+					|| (piece.getCouleur().equals(Couleur.NOIR) && piece.getY() == 7)) {
+				return true;
+			}
 		}
-		
 		return false;
 	}
 	
 	public boolean pawnPromotion(int xFinal, int yFinal, String type) {
 		if (this.isPawnPromotion(xFinal, yFinal)) {
 			Pieces piece = this.findPiece(xFinal, yFinal);
-			piece = null;
-			// TODO créer une pièce avec le type demandé
+			piece.setX(-1);
+			piece.setY(-1);
+			
+			// nouvelle pièce du type renseigné
+			Pieces newPiece = ChessSinglePieceFactory.newPiece(piece.getCouleur(), type, xFinal, yFinal);
+			this.pieces.add(newPiece);
 			return true;
 		}
 		return false;
@@ -157,6 +164,11 @@ public class Jeu {
 	@Override
 	public String toString() {
 		return "Jeu " + getCouleur() + " : " + this.pieces.toString();
+	}
+	
+	public static void main(String[] args) {
+		Jeu jeu = new Jeu(Couleur.NOIR);
+		System.out.println(jeu);
 	}
 
 }

@@ -1,10 +1,7 @@
 package model;
 
 public final class Tour extends AbstractPiece implements Pieces {
-	
-	protected Coord coord;
-	private Couleur couleur_de_piece;
-	
+		
 	public Tour(Couleur couleur_de_piece, Coord coord) {
 		super(couleur_de_piece,coord);
 	}

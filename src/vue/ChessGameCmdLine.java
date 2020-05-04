@@ -78,16 +78,11 @@ public class ChessGameCmdLine implements Observer{
 		System.out.print("\n Déplacement de 3,6 vers 3,4 = ");
 		chessGameControler.move(new Coord(3,6), new Coord(3, 4));	// true
 
-		// dans ce cas, update non appelé et pas d'affichage 
-		// controleur empêche le move car pas le bon joueur
-		System.out.print("\n Déplacement de 3,4 vers 3,6 = ");		
-		chessGameControler.move(new Coord(3,4), new Coord(3, 6));	// false 
-
 		System.out.print("\n Déplacement de 4,1 vers 4,3 = ");
 		chessGameControler.move(new Coord(4, 1), new Coord(4, 3));	// true
 
-		System.out.print("\n Déplacement de 3,4 vers 3,4 = ");
-		chessGameControler.move(new Coord(3, 4), new Coord(3, 4));	// false
+		System.out.print("\n Déplacement de 3,7 vers 3,5 = ");
+		chessGameControler.move(new Coord(3, 7), new Coord(3, 5));
 
 		System.out.print("\n Déplacement de 3,4 vers 4,3 = ");
 		chessGameControler.move(new Coord(3, 4), new Coord(4, 3));	// true	

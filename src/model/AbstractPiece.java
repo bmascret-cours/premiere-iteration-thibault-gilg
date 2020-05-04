@@ -49,6 +49,8 @@ public abstract class AbstractPiece implements Pieces {
 	@Override
 	public boolean move(int x, int y) {
 		if (this.isMoveOk(x, y)) {
+			this.setX(x);
+			this.setY(y);
 			return true;
 		}
 		return false;

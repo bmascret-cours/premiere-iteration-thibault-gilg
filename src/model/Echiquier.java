@@ -59,14 +59,14 @@ public class Echiquier implements BoardGames {
 				if (Coord.coordonnees_valides(xFinal, yFinal)) {
 					// si algo de déplacement respecté
 					if (this.JeuCourant.isMoveOk(xInit, yInit, xFinal, yFinal)) {
-						this.setMessage("Déplacement OK");
+						this.setMessage("déplacement OK");
 						return true;
 						
 					}
 				}
 			}
 		}
-		this.setMessage("Déplacement interdit");
+		this.setMessage("déplacement interdit");
 		return false;
 	}
 	
@@ -112,8 +112,8 @@ public class Echiquier implements BoardGames {
 	public static void main(String[] args) {		
 		Echiquier Echec = new Echiquier();
 		System.out.println(Echec);
-		System.out.println(Echec.getPieceColor(0, 0));
-		System.out.println(Echec.move(0, 0, 3, 7));
+		System.out.println(Echec.getPieceColor(1, 0));
+		System.out.println(Echec.move(0, 7, 0, 1));
 
 	}
 	

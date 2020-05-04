@@ -31,11 +31,10 @@ public class Pion extends AbstractPiece implements Pions {
 	}
 	
 	public boolean move(int xFinal, int yFinal) {
-		if (this.isMoveOk(xFinal, yFinal)) {
+		boolean move =super.move(xFinal, yFinal);
+		if (move)
 			this.hasMoved = true;
-			return true;
-		}
-		return false;
+		return move;
 	}
 	
 	public boolean isMoveDiagOk(int xFinal, int yFinal) {
