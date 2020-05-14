@@ -11,11 +11,11 @@ import java.util.List;
  */
 public  class PieceIHM {
 	 
-	String type;
-	Couleur couleur;
-	List<Coord> listCoord;
+	private String type;
+	private Couleur couleur;
+	private List<Coord> listCoord;
 	
-	PieceIHM(String type, Couleur couleur) {
+	public PieceIHM(String type, Couleur couleur) {
 		this.type = type;
 		this.couleur = couleur;
 		listCoord = new LinkedList<Coord>();

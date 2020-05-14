@@ -3,147 +3,131 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Point;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controler.ChessGameControlers;
+import controler.controlerLocal.ChessGameControler;
 import model.Coord;
+import model.Couleur;
 import model.PieceIHM;
+import model.observable.ChessGame;
 import tools.ChessImageProvider;
+import tools.ChessPiecePos;
 
-public class ChessGameGUI extends javax.swing.JFrame
-	implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer {
-	
-	
-	private JLayeredPane layeredPane;
-	private JPanel chessBoard;
-	private JLabel chessPiece;
-	private int xAdjustment;
-	private int yAdjustment;
-	  
+public class ChessGameGUI extends javax.swing.JFrame implements java.awt.event.MouseMotionListener, java.awt.event.MouseListener, java.util.Observer{
+
+	private JPanel chessBoard = new JPanel();
 	private ChessGameControlers chessGameController;
-
-	  
-
-	public ChessGameGUI(String name, ChessGameControlers chessGameController, Dimension boardSize) {
+	private int rows = 8;
+	private int column = 8;
+	private boolean piece_selected = false;
+	private Coord coord_selected = new Coord(0, 0);
+	
+	public ChessGameGUI(java.lang.String name, ChessGameControlers chessGameController, java.awt.Dimension boardSize) {
+	
 		this.chessGameController = chessGameController;
-
-		//  Use a Layered Pane for this application
-		layeredPane = new JLayeredPane();
+		
+		
+		JLayeredPane layeredPane = new JLayeredPane();
 		getContentPane().add(layeredPane);
 		layeredPane.setPreferredSize(boardSize);
 		layeredPane.addMouseListener(this);
 		layeredPane.addMouseMotionListener(this);
-		
-		//Add a chess board to the Layered Pane 
-		 
-		chessBoard = new JPanel();
-		layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
-		chessBoard.setLayout( new GridLayout(8, 8) );
-		chessBoard.setPreferredSize( boardSize );
-		chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
-		 
-		for (int i = 0; i < 64; i++) {
-			JPanel square = new JPanel( new BorderLayout() );
-			chessBoard.add( square );
-		 
-			int row = (i / 8) % 2;
-			if (row == 0)
-				square.setBackground( i % 2 == 0 ? Color.black : Color.white );
-			else
-				square.setBackground( i % 2 == 0 ? Color.white : Color.black );
-		}
+		layeredPane.add(this.chessBoard, JLayeredPane.DEFAULT_LAYER);
+		this.chessBoard.setLayout( new GridLayout(8, 8) );
+		this.chessBoard.setPreferredSize( boardSize );
+		this.chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
 
-		
+
+	
+	}
+	
+	private void displayPiece(String pieceImage, Couleur color, Coord coord) {
+		String pathImg = ChessImageProvider.getImageFile(pieceImage, color);
+		JLabel piece = new JLabel(new ImageIcon(pathImg));
+		JPanel panel = (JPanel)this.chessBoard.getComponent(this.getComponentFromXY(coord.x, coord.y));
+		panel.add(piece);
 	}
 	
 
-	@Override
+	private int getComponentFromXY(int x, int y) {
+		return this.rows * y + x;
+	}
+	
+	
+	private Coord getCoordFromClick(int x, int y) {
+		return new Coord(x/(700/8), y/(700/8));
+	}
+	
+	
 	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		this.chessBoard.removeAll();
+		this.chessBoard.updateUI();
 		
-		List<PieceIHM> listPiecesIHM = (List<PieceIHM>) arg;
-		for (PieceIHM pieceIHM : listPiecesIHM) {
-			for (Coord coord : pieceIHM.getList()) {
-				System.out.println(ChessImageProvider
-						.getImageFile(pieceIHM.getTypePiece(), pieceIHM.getCouleur()));
-				JLabel piece = new JLabel( new ImageIcon(ChessImageProvider
-						.getImageFile(pieceIHM.getTypePiece(), pieceIHM.getCouleur())));
-				JPanel panel = (JPanel)chessBoard.getComponent(coord.x + 8*coord.y);
-				panel.add(piece);
-			}
+		for (int i = 0; i < this.rows * this.column; i++) {
+			  JPanel square = new JPanel( new BorderLayout() );
+			  this.chessBoard.add( square );
+			 
+			  int row = (i / this.column) % 2;
+			  if (row == 0)
+			  square.setBackground( i % 2 == 0 ? Color.black : Color.white );
+			  else
+			  square.setBackground( i % 2 == 0 ? Color.white :  Color.black );
 		}
 		
-	}
+		
+		
+		ArrayList<PieceIHM> listPieces = (ArrayList<PieceIHM>) arg;
+		String pieceName;
+		Coord pieceCoord;
+		Couleur pieceColor;
+		for (int i = 0; i < listPieces.size(); i++) {
+			pieceName = listPieces.get(i).getTypePiece();
+			pieceColor = listPieces.get(i).getCouleur();
+			for (int j = 0; j < listPieces.get(i).getList().size(); j++) {
+				pieceCoord = listPieces.get(i).getList().get(j);
+				this.displayPiece(pieceName, pieceColor, pieceCoord);
+			}
+			
+		}
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
-	
-    private Coord getPieceCoord(int x, int y) {
-        return new Coord(x/(700/8), y/(700/8));
-    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-	}
-		
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		chessPiece = null;
-		Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-		 
-		if (c instanceof JPanel) 
-			return;
-		 
-		Point parentLocation = c.getParent().getLocation();
-		xAdjustment = parentLocation.x - e.getX();
-		yAdjustment = parentLocation.y - e.getY();
-		chessPiece = (JLabel)c;
-		chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-		chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
-		layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
-		
-	}
-
-	public void mouseDragged(MouseEvent me) {
-		if (chessPiece == null) return;
-		chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
-	}
-		 
-		//Drop the chess piece back onto the chess board
-		 
-	public void mouseReleased(MouseEvent e) {
-		if(chessPiece == null) return;
-		 
-		chessPiece.setVisible(false);
-		Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-		 
-		if (c instanceof JLabel){
-			Container parent = c.getParent();
-			parent.remove(0);
-			parent.add( chessPiece );
+		Coord point = getCoordFromClick(e.getX(), e.getY());
+		if(!this.piece_selected) {
+			this.coord_selected = point;
+			JPanel panel = (JPanel)this.chessBoard.getComponent(this.getComponentFromXY(point.x, point.y));
+			panel.setBackground(Color.blue);
+			this.piece_selected = true;
 		}
-		  
 		else {
-			Container parent = (Container)c;
-			parent.add( chessPiece );
+			this.chessGameController.move(this.coord_selected, point);
+			this.piece_selected = false;
 		}
-		 
-		chessPiece.setVisible(true);
+		
 	}
 
 	@Override
@@ -157,5 +141,31 @@ public class ChessGameGUI extends javax.swing.JFrame
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }
